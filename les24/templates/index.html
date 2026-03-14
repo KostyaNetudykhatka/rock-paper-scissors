@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Event Planner</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>My Event Planner</h1>
+
+    <form method="POST" class="task-form">
+
+        <input type="text" name="task" placeholder="Enter event name" required>
+
+        <input type="date" name="date">
+
+        <input type="time" name="time">
+
+        <select name="priority">
+            <option value="Low">Low priority</option>
+            <option value="Medium">Medium priority</option>
+            <option value="High">High priority</option>
+        </select>
+
+        <button type="submit">➕ Add Event</button>
+
+    </form>
+
+    <a href="/clear" class="clear-btn">🗑 Clear All</a>
+
+    <ul class="task-list">
+
+        {% for task in tasks %}
+        <li>
+
+            <div>
+
+                <strong>{{ task.id }}. {{ task.title }}</strong><br>
+
+                📅 {{ task.date }} ⏰ {{ task.time }}<br>
+
+                <span class="priority-{{ task.priority }}">
+                    {{ task.priority }}
+                </span>
+
+            </div>
+
+            <a class="delete-btn" href="{{ url_for('delete', task_id=task.id) }}">
+                ❌
+            </a>
+
+        </li>
+        {% endfor %}
+
+    </ul>
+
+</div>
+
+</body>
+</html>
